@@ -3,3 +3,11 @@ module.  Documentation for the implementation is in doc/.
 
 See INSTALL for (generic) installation instructions for C++: basically
    ./autogen.sh && ./configure && make && make install
+
+Or, with Bazel, add the following snippet to the WORKSPACE file:
+
+    git_repository(
+        name = "com_github_google_glog",
+        remote = "https://github.com/google/glog.git",
+        tag = 'REDACTED',
+    )

@@ -1,3 +1,5 @@
+workspace(name = 'com_github_google_glog')
+
 git_repository(
     name = "com_github_gflags_gflags",
     remote = "https://github.com/gflags/gflags.git",
