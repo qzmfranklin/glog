@@ -9,5 +9,15 @@ Or, with Bazel, add the following snippet to the WORKSPACE file:
     git_repository(
         name = "com_github_google_glog",
         remote = "https://github.com/google/glog.git",
-        tag = 'REDACTED',
+        commit = 'ad2743c33ac9ac51ab6c9c7fe8bc619c4a1a3ad6',
     )
+    # By default, glog depends on gflags.
+    git_repository(
+        name = "com_github_gflags_gflags",
+        remote = "https://github.com/gflags/gflags.git",
+        tag = 'v2.2.1',
+    )
+
+Then you can reference the glog library in BUILD files like this:
+
+    @com_github_google_glog//:glog
