@@ -7,7 +7,7 @@
 #       https://github.com/google/glog/issues/61
 #       https://github.com/google/glog/files/393474/BUILD.txt
 
-def glog_library(namespace='google', with_gflags=1):
+def glog_library(namespace='google', with_gflags=1, with_libunwind=1):
     if native.repository_name() != '@':
         gendir = '$(GENDIR)/external/' + native.repository_name().lstrip('@')
     else:
@@ -72,13 +72,17 @@ def glog_library(namespace='google', with_gflags=1):
 
             # Include generated header files.
             '-I%s/glog_internal' % gendir,
-        ] + [
+        ] + ([
             # Use gflags to parse CLI arguments.
             '-DHAVE_LIB_GFLAGS',
-        ] if with_gflags else [],
-        deps = [
-            '@com_github_gflags_gflags//:gflags',
-        ] if with_gflags else [],
+        ] if with_gflags else []) + ([
+            '-DHAVE_LIBUNWIND',
+        ] if with_libunwind else []),
+        deps = ([
+            '//third_party/cc/gflags',
+        ] if with_gflags else []) + ([
+            '//third_party/cc/libunwind'
+        ] if with_libunwind else []),
     )
 
     native.genrule(
