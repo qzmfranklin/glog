@@ -49,6 +49,7 @@ def glog_library(namespace='google', with_gflags=1, with_libunwind=1):
         strip_include_prefix = 'src',
         copts = [
             # Disable warnings that exists in glog.
+            '-Wno-invalid-noreturn',
             '-Wno-sign-compare',
             '-Wno-unused-function',
             '-Wno-unused-local-typedefs',
@@ -56,6 +57,8 @@ def glog_library(namespace='google', with_gflags=1, with_libunwind=1):
             "-DGLOG_BAZEL_BUILD",
             # Inject a C++ namespace.
             "-DGOOGLE_NAMESPACE='%s'" % namespace,
+            "-D_START_GOOGLE_NAMESPACE_='namespace %s {'" % namespace,
+            "-D_END_GOOGLE_NAMESPACE_='}'",
             # Allows src/base/mutex.h to include pthread.h.
             '-DHAVE_PTHREAD',
             # Allows src/logging.cc to determine the host name.
